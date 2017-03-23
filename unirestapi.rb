@@ -20,8 +20,13 @@ output_filename = ARGV[1] || "output.txt"
 puts "Starting"
 CSV.open(output_filename, "wb") do |csv|
   puts "Output file=#{output_filename}"
-  File.open(input_filename).each do |line|
-    domain = line.split(",").first.strip
+  File.open(input_filename).each_with_index do |line, index|
+    domain = line.split(",").first
+    domain.strip! if domain
+    if domain.nil? || domain.empty?
+      puts "ignoring line #{index+1}"
+      next
+    end
     puts "fetching #{domain}"
     response = Unirest.get("http://jsonwhois.com/api/v1/whois", 
                           headers:{ 
