@@ -1,0 +1,5 @@
+source "https://rubygems.org"
+gem "whois"
+gem "whois-parser"
+gem "unirest"
+gem "dotenv"
